@@ -122,11 +122,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
         int leftChild = leftIndex(index);
         int rightChild = rightIndex(index);
-        if (leftChild == min(index, leftChild)) {
+        if (leftChild == min(leftChild, index)) {
             swap(index, leftChild);
             sink(leftChild);
         }
-        if (rightChild == min(index, rightChild)) {
+        if (rightChild == min(rightChild, index)) {
             swap(index, rightChild);
             sink(rightChild);
         }
