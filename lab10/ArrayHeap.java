@@ -105,7 +105,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
         int p = parentIndex(index);
-        if (index == min(index, p)) {
+        if (index == min(p, index)) {
             swap(index, p);
             if (p != 1) {
                 swim(p); // continue to swim with parent index
@@ -243,7 +243,6 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             return toReturn;
         }
     }
-
 
     /**
      * Throws an exception if the index is invalid for sinking or swimming.
