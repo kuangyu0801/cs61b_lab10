@@ -41,7 +41,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      * Returns the index of the node that is the parent of the node at i.
      */
     private static int parentIndex(int i) {
-        int reIndex = (i / 2 == 0) ? 1: i / 2;
+        int reIndex = (i / 2 == 0) ? 1 : i / 2;
         return reIndex;
     }
 
@@ -107,7 +107,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         int p = parentIndex(index);
         if (index == min(index, p)) {
             swap(index, p);
-            if(p != 1) {
+            if (p != 1) {
                 swim(p); // continue to swim with parent index
             }
         }
@@ -145,7 +145,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         }
         contents[size + 1] = new Node(item, priority);
         size += 1;
-        if( size > 1) {
+        if (size > 1) {
             swim(size);
         }
 
@@ -201,7 +201,14 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public void changePriority(T item, double priority) {
-        /* TODO: Your code here! */
+        for(int i = 1; i < size; i += 1) {
+            T item1 = contents[i].myItem;
+            if (item1.equals(item)) {
+                contents[i] = new Node(item, priority);
+                swim(i);
+                break;
+            }
+        }
         return;
     }
 
