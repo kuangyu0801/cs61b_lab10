@@ -120,26 +120,28 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     private void sink(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
-        // min(a, b) returns b when a >= b, a when a < b
-        int leftChild = leftIndex(index);
-        int rightChild = rightIndex(index);
-        boolean leftExist = leftChild <= size;
-        boolean rightExist = rightChild <= size;
-        boolean leftIsSmall = min(index, leftChild) == leftChild && leftExist;
-        boolean rightIsSmall = min(index, rightChild) == rightChild && rightExist;
-
-        if (leftIsSmall && rightIsSmall) { // index can sink both child
-            int nodeToSink = min(leftChild, rightChild); // when equal, choose to sink right
-            swap(nodeToSink, index);
-            sink(nodeToSink);
-        } else if (leftIsSmall) { // index sink left
-            swap(leftChild, index);
-            sink(leftChild);
-        } else if (rightIsSmall) { // index sink right
-            swap(rightChild, index);
-            sink(rightChild);
+        int leftIndex = leftIndex(index);
+        boolean hasLeft = leftIndex <= size;
+        if (!hasLeft) { // Have sank down to the bottom
+            return;
         }
-        return;
+        int vsLeft = min(index, leftIndex);
+        int rightIndex = rightIndex(index);
+        boolean hasRight = rightIndex <= size;
+        if (vsLeft == leftIndex) {
+            if (hasRight && min(leftIndex, rightIndex) == rightIndex) {
+                swap(index, rightIndex);
+                sink(rightIndex);
+            } else {
+                swap(index, leftIndex);
+                sink(leftIndex);
+            }
+        }
+        if (hasRight && min(index, rightIndex) == rightIndex) {
+            // There is no case when `leftVsRight == leftIndex
+            swap(index, rightIndex);
+            sink(rightIndex);
+        }
     }
 
     /**
